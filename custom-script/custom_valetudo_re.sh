@@ -92,10 +92,8 @@ function custom_function_valetudo_re() {
             cat "${VALETUDO_RE_PATH}/hosts" >> "${IMG_DIR}/etc/hosts"
         fi
 
-        sed -i 's/exit 0//' "${IMG_DIR}/etc/rc.local"
-        cat "${VALETUDO_RE_PATH}/rc.local" >> "${IMG_DIR}/etc/rc.local"
-        echo >> "${IMG_DIR}/etc/rc.local"
-        echo "exit 0" >> "${IMG_DIR}/etc/rc.local"
+        sed -i -E "/# By default this script does nothing./{r ${VALETUDO_RE_PATH}/rc.local
+G}" "${IMG_DIR}/etc/rc.local"
 
         # UPLOAD_METHOD=0
         sed -i -E 's/(UPLOAD_METHOD=)([0-9]+)/\10/' "${IMG_DIR}/opt/rockrobo/rrlog/rrlog.conf"
