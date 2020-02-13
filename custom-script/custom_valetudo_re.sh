@@ -88,7 +88,9 @@ function custom_function_valetudo_re() {
         install -m 0755 "${VALETUDO_RE_PATH}/valetudo" "${IMG_DIR}/usr/local/bin/valetudo"
         install -m 0644 "${VALETUDO_RE_PATH}/valetudo.conf" "${IMG_DIR}/etc/init/valetudo.conf"
 
-        cat "${VALETUDO_RE_PATH}/hosts" >> "${IMG_DIR}/etc/hosts"
+        if [ $ENABLE_CLOUD_DNSMASQ -ne 1 ]; then
+            cat "${VALETUDO_RE_PATH}/hosts" >> "${IMG_DIR}/etc/hosts"
+        fi
 
         sed -i 's/exit 0//' "${IMG_DIR}/etc/rc.local"
         cat "${VALETUDO_RE_PATH}/rc.local" >> "${IMG_DIR}/etc/rc.local"

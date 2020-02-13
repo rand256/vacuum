@@ -21,6 +21,7 @@ fi
                         --enable-turn-off-ny \
                         --disable-logs \
                         --replace-adbd \
+                        --enable-cloud-dnsmasq \
                         --valetudo-re-path=./valetudo \
                         --valetudo-re-nodeps \
                         --enable-ramdisk \
