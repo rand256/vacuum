@@ -1,0 +1,29 @@
+#!/bin/sh
+
+load() {
+    curtime=`cat /proc/uptime | awk -F ' ' '{print $1}'`
+    echo "[$curtime] start cloud-dnsmasq"
+    start-stop-daemon -S -q -p /var/run/cloud-dnsmasq.pid -x /usr/sbin/cloud-dnsmasq -- -p 5354 -C /dev/null -x /var/run/cloud-dnsmasq.pid -A /mi.com/xiaomi.com/203.0.113.1
+}
+
+unload() {
+    echo "Stopping dnsmasq" >/dev/kmsg
+    start-stop-daemon -K -q -p /var/run/cloud-dnsmasq.pid
+}
+
+case "$1" in
+    start)
+        load
+        ;;
+    stop)
+        unload
+        ;;
+    restart)
+        unload
+        load
+        ;;
+    *)
+        echo "$0 <start/stop/restart>"
+        ;;
+esac
+
